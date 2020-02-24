@@ -1,48 +1,59 @@
-import React, { Component } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import React, { useCallback,useState} from 'react'
+import {StyleSheet, Text, View} from 'react-native';
+import SwipeableViews from 'react-swipeable-views-native';
+// import Swiper from 'react-native-swiper';
+import PlayView from './playView/index';
+import PlayListView from './playList/index';
+// import Test from './test/index';
 
-import Swiper from 'react-native-swiper'
-import PlayView from './playView/index'
 
 const styles = StyleSheet.create({
-	wrapper: {},
-	slide1: {
-		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
-		backgroundColor: '#9DD6EB'
-	},
-	slide2: {
-		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
-		backgroundColor: '#97CAE5'
-	},
-	slide3: {
-		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
-		backgroundColor: '#92BBD9'
-	},
-	text: {
-		color: '#fff',
-		fontSize: 30,
-		fontWeight: 'bold'
-	}
+  wrapper: {},
+  slide1: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#9DD6EB',
+  },
+  slide2: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#97CAE5',
+  },
+  slide3: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#92BBD9',
+  },
+  text: {
+    color: '#fff',
+    fontSize: 30,
+    fontWeight: 'bold',
+  },
 })
 
-export default class SwiperComponent extends Component {
-	render() {
-		return (
-			<Swiper style={styles.wrapper} showsButtons={true}>
-				<View style={styles.slide1}>
-					<Text style={styles.text}>Hello Swiper</Text>
-				</View>
-				<PlayView />
-				<View style={styles.slide3}>
-					<Text style={styles.text}>And simple</Text>
-				</View>
-			</Swiper>
-		)
-	}
+export default () => {
+	const [info, setInfo] = useState(null);
+	const playMusic = useCallback(
+		(item) => {
+			console.log('playMusic')
+			setInfo(item)
+		},
+		[],
+	);
+
+
+	return (
+		<SwipeableViews style={styles.wrapper}>
+			<View>
+				<PlayListView playMusic={playMusic}/>
+			</View>
+			<View>
+				<PlayView info={info}/>
+			</View>
+
+		</SwipeableViews>
+	);
 }
